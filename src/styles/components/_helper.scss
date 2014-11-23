@@ -1,0 +1,22 @@
+// src/styles/components/_helper.scss 
+
+
+.reveal div.half {
+    float: left;
+    width: 48%;
+    margin: 0 1%;
+    color: #f7f7f7;
+    text-shadow: 0 0 7px rgba(0,0,0,1);
+    font-weight: bold;
+
+    a {
+        color: inherit;
+        text-shadow: inherit;
+
+        &:hover {
+            text-shadow: inherit;
+            color: darken(#f7f7f7, 10);
+            text-decoration: underline;
+        }
+    }
+}

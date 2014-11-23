@@ -20,8 +20,6 @@
             </div>
         </div>
 
-        <a class="skip-to-index" href="#/83">Skip to Index</a>
-
         <script src="scripts/reveal.min.js"></script>
         <script>
         Reveal.initialize({{{json config.reveal}}});

@@ -1,4 +1,4 @@
-title: React to the Flux
+title: React
 author: Robin Thrift
 twitter: RobinThrift
 homepage: RobinThrift.com
@@ -21,6 +21,7 @@ reveal:
 }
 
 #[var title]
+### A JAVASCRIPT LIBRARY FOR BUILDING USER INTERFACES
 
 <div class="author-info">
     <h5>[var author]</h5>
@@ -30,29 +31,9 @@ reveal:
 
 --
 
-## What?
-
---
-
-## React.js and Flux
-
---
-
-## What is React?
-
-[fragment]
-#### "A JAVASCRIPT LIBRARY FOR BUILDING USER INTERFACES"
-[/fragment]
-
--- {
-    background:
-        img: 'img/react_logo.png'
-        size: 100px
-        position: 5% 10%
-}
+## React?
 
 - Declarative
-- One-Way
 - Immutable
 - Virtual Dom Diffing
 
@@ -67,58 +48,124 @@ reveal:
 #### Everything is a component
 [/fragment]
 
-[fragment]
-##### No Templates!
-[/fragment]
 --
 
-### What do they look like?
-
-[fragment]
 ```js
-React.createClass({
-    render: function() {
+class Hello extends React.Compontent {
+    render() {
         return (
             <div>Hello World, at {new Date().toString()}</div>
         );
     }
-});
+}
 ```
-[/fragment]
 
-[fragment]
-```js
-React.createClass({
-    render: function() {
-        return React.createElement("div", null, 
-            "Hello World, at " + (new Date().toString()));
-    }
-});
-```
-##### boring...
-[/fragment]
+-- {
+    background:
+        img: http://i.giphy.com/gtfppP6qR3tiU.gif
+}
+
+
+## [white]Is that  HTML in my  JavaScript!?[/white]
 
 --
 
-### Also...
+hello.angular.js
+```js
+angular.module('Hello')
+    .directive(function() {
+        return {
+            scope: {
+                date: '=',
+                items: '='
+            },
+            templateUrl: 'my-template.tpl.html',
+            controller: function($scope) {
+                $scope._clickHandler = function(item) {
+                    alter(item.title);
+                }
+            }
+        }  
+    });
+```
+my-template.tpl.html
+```html
+<h3>{{date}}</h3>
+<ul>
+    <li ng-repeat="item in items" ng-click="_clickHandler(item)">
+        {{item.title}}
+    </li>
+</ul>
+```
 
-- Mixins
-- No jumping between files
-- Simpler
-- Easier to maintain
+--
+
+hello.react.jsx
+```js
+class Hello extends React.Component {
+    render() {
+        return (
+            <div>      
+                <h3>{this.propts.date}</h3>
+                <ul>
+                    {items.map((item, i) => {
+                       return <li onClick={this._clickHandler.bind(this, item)} 
+                                key={i}>{item.title}</li>                   
+                    })}
+                </ul>
+            </div>      
+        )
+    }
+
+    _clickHandler(item) {
+        alert(item.title);
+    }
+}
+Hello.propTypes = {
+    items: React.PropTypes.array,
+    date: React.PropTypes.instanceof(Date)
+};
+```
+--
+
+PropTypes
+
+```js
+React.PropTypes.array,
+React.PropTypes.bool,
+React.PropTypes.func,
+React.PropTypes.number,
+React.PropTypes.object,
+React.PropTypes.string,
+React.PropTypes.node,
+React.PropTypes.element,
+React.PropTypes.instanceOf(Message),
+React.PropTypes.oneOf(['News', 'Photos']),
+React.PropTypes.oneOfType([
+  React.PropTypes.string,
+  React.PropTypes.number,
+]),
+React.PropTypes.arrayOf(React.PropTypes.number),
+React.PropTypes.objectOf(React.PropTypes.number),
+React.PropTypes.shape({
+  color: React.PropTypes.string,
+  fontSize: React.PropTypes.number
+}),
+React.PropTypes.func.isRequired,
+React.PropTypes.any.isRequired,
+customProp: function(props, propName, componentName) {
+  if (!/matchme/.test(props[propName])) {...}
+}
+```
 
 --
 
 ### Why?
 
-- Reusable
-- Encapsulated
-- Single-Concern-Pattern
+- Components over separation of concerns
+- tying 'templates' and 'display logic' together
 
-[fragment]
-- Testable
-[/fragment]
-
+#### ⟹  simpler, more expressive Code
 
 --
 
@@ -126,8 +173,12 @@ React.createClass({
 
 --
 
-- `render()` is called on every update
+- entire DOM is rerendered
 - no "bindings"
+
+[fragment]
+... kinda
+[/fragment]
 
 --
 
@@ -159,3 +210,103 @@ React.createClass({
 --
 
 ![](img/dom_marked.png)
+
+--
+
+### Benefits
+
+- Simpler Architecture
+- Browserless Rendering
+- Predictable => Testable
+
+--
+
+## Flux
+
+-- {
+    background:
+        img: img/flux.png
+        size: 80% auto
+}
+
+--
+
+```js
+DateDisplay = React.createClass({
+    propTypes: {                         
+        date: React.PropTypes.object,    
+        compareTo: React.PropTypes.object
+    },                                   
+    getDefaultProps: function() {        
+        return {                         
+            compareTo: moment()           
+        };           
+    },
+    render: function() {
+        return (
+           <span className="date">{this.props.date.from(this.props.compareTo)}</span> 
+        );
+    };
+
+});
+```
+
+--
+
+```js
+DateInput = React.createClass({
+    getInitialState: function() {        
+        return {                         
+            date: moment().format('DD.MM.YY')
+        };           
+    },
+    render: function() {
+        return (
+            <input name="dateInput" id="dateInput" 
+                value={this.state.date} 
+                onChange={this._changeHandler} />
+        );
+    },
+
+    _changeHandler: function(e) {
+        this.setState({
+            date: e.target.value
+        });
+        if (typeof this.props.onChange === 'function') {
+            this.props.onChange(e.target.value);
+        }
+    }
+});
+```
+
+--
+
+```js
+App = React.createClass({
+    getInitialState: function() {
+        return {
+            date: moment()
+        };
+    },
+    render: function() {
+        return (
+            <div className='app-wrapper'>
+                <DateInput onChange={this._onChange} />
+                <DateDisplay date={this.state.date} />
+            </div>
+        );
+    },
+    _onChange: function(val) {
+        var d = moment(val, 'DD.MM.YY');
+        if (d.isValid()) {
+            this.setState({
+                date: d
+            });
+        }
+    }
+});
+```
+
+--
+
+<iframe src="http://localhost:8000" style="width:800px;height:400px"></iframe>

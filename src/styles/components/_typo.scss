@@ -42,18 +42,26 @@ body {
 
 .reveal span.text--white {
     color: #f7f7f7;
-    text-shadow: 0 0 12px rgba(0,0,0,.9);
+    text-shadow: 0 0 8px rgba(0,0,0,.9);
     font-family: $headingFont;
     position: absolute;
-    font-size: 65px;
-    left: 5%;
-    top: 700%;
 }
 .reveal h1 span.text--white {
     position: inherit;
     left: inherit;
     top: inherit;;
     font-size: inherit;
+}
+
+.reveal h2 span.text--white {
+    position: inherit;
+    left: inherit;
+    top: inherit;;
+    font-size: inherit;
+    top: 300%;
+    left: -30%;
+    position: absolute;
+    display: block;
 }
 
 .reveal pre {
@@ -76,6 +84,7 @@ body {
 .reveal ul {
     width: 100%;
     margin-bottom: 40px;
+    width: auto;
 }
 
 .reveal section img {

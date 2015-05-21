@@ -49,6 +49,9 @@ Metalsmith(__dirname)
             'white': function(str) {
                 return '<span class="text--white">' + str + '</span>';
             },
+            'shadowed': function(str) {
+                return '<span class="text--shadowed">' + str + '</span>';
+            },
             'half': function(str) {
                 return '<div class="half">' + str + '</div>';
             }

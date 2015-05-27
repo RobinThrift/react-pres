@@ -1,0 +1,35 @@
+- What is React?
+    - A JAVASCRIPT LIBRARY FOR BUILDING USER INTERFACES
+    - V in MVC
+- Everything Is a Component
+    - disection example
+    - simple JSX Code Example
+    - show transformed code
+    - Prop Types = Type Safety?
+    - more examples?
+    - angular - react comparison
+    - Conclusion
+- Immutable
+    - no two-way bindings, or bindings at all
+    - Everything in React is immutable by default
+    - onChange: rerender enitire DOM
+    - ...kinda
+- Virtual DOM
+    - DOM slow, not JS
+    - Recreate DOM in JS
+    - improved Tree Diffing Algorithm: O(log n) instead of O(n^3)
+    - batch changes
+    - diff new and old tree, apply changes to real DOM
+- State
+    - is immuatable
+- More JSX Stuff
+    - ifs
+    - refs
+    - ...spread
+- Benefits
+    - Simpler Architecture
+    - Browserless Rendering
+    - Predictable => Testable
+    - Components over separation of concerns
+    - tying 'templates' and 'display logic' together
+    - ⟹  simpler, more expressive Code

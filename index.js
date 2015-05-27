@@ -52,6 +52,12 @@ Metalsmith(__dirname)
             'shadowed': function(str) {
                 return '<span class="text--shadowed">' + str + '</span>';
             },
+            'accented': function(str) {
+                return '<span class="text--accented">' + str + '</span>';
+            },
+            'small': function(str) {
+                return '<small class="text--small">' + str + '</small>';
+            },
             'half': function(str) {
                 return '<div class="half">' + str + '</div>';
             }

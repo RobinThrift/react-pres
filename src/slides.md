@@ -4,7 +4,7 @@ twitter: RobinThrift
 homepage: RobinThrift.com
 shortcodes: true
 css:
-    - 'http://fonts.googleapis.com/css?family=Open+Sans:300italic,300,700|Ubuntu:400,700|Source+Code+Pro'
+    - 'http://fonts.googleapis.com/css?family=Droid+Sans:400,700|Source+Code+Pro|Kaushan+Script'
 reveal:
     controls: true
     progress: true
@@ -20,42 +20,68 @@ reveal:
         img: '#cb5243'
 }
 
-#[var title]
-### A JAVASCRIPT LIBRARY FOR BUILDING USER INTERFACES
+# [var title]
+#### A JAVASCRIPT LIBRARY FOR BUILDING USER INTERFACES
 
 <div class="author-info">
     <h5>[var author]</h5>
     <a href="http://twitter.com/[var twitter]">@[var twitter]</a>
-    <a href="http://[var homepage]">[var homepage]</a>
 </div>
 
 --
 
-## React?
+### "A JavaScript library for building [accented]user interfaces[/accented] "
 
-- Declarative
-- Immutable
-- Virtual Dom Diffing
+-- {
+    transition: fade
+    classes: 
+        - 'mvc-overview'
+}
 
--- 
+- <strong>M</strong>odel
+- <strong>V</strong>iew
+- <strong>C</strong>ontroller
 
-## One Step at a time...
+-- {
+    transition: none
+    classes: 
+        - 'mvc-overview'
+        - 'mvc-overview__2'
+}
+
+- <strong>M</strong>odel
+- <strong>V</strong>iew
+- <strong>C</strong>ontroller
 
 --
 
-## React is Declarative
-[fragment]
-#### Everything is a component
-[/fragment]
+### Everything Is A Component
+
+-- {
+    transition: fade
+}
+
+![img/shopping_cart_abstract.png](img/shopping_cart_abstract.png)
+
+-- {
+    transition: fade
+}
+
+![img/shopping_cart_abstract.png](img/shopping_cart_abstract_hl_1.png)
+
+
+-- {
+    transition: none
+}
+
+![img/shopping_cart_abstract.png](img/shopping_cart_abstract_hl_2.png)
 
 --
 
 ```js
 class Hello extends React.Compontent {
     render() {
-        return (
-            <div>Hello World, at {new Date().toString()}</div>
-        );
+        return <div>Hello World, at {new Date().toString()}</div>;
     }
 }
 ```
@@ -70,62 +96,113 @@ class Hello extends React.Compontent {
 
 --
 
-hello.angular.js
+## Yes...
+[fragment]but no[/fragment]
+
+--
+
+### Meet
+<h2>[fragment]JSX[/fragment]</h2>
+
+
+--
+
 ```js
-angular.module('Hello')
-    .directive(function() {
-        return {
-            scope: {
-                date: '=',
-                items: '='
-            },
-            templateUrl: 'my-template.tpl.html',
-            controller: function($scope) {
-                $scope._clickHandler = function(item) {
-                    alter(item.title);
-                }
-            }
-        }  
-    });
+render() {
+    return <div>Hello World, at {new Date().toString()}</div>;
+}
 ```
-my-template.tpl.html
-```html
-<h3>{{date}}</h3>
-<ul>
-    <li ng-repeat="item in items" ng-click="_clickHandler(item)">
-        {{item.title}}
-    </li>
-</ul>
+⟱ JSX Transformer ⟱
+```js
+render() {
+    return React.createElement('div', {}, 'Hello World, at ', new Date().toString());
+}
+```
+
+[fragment]
+`React.createElement(name, attributes, children...)`
+[/fragment]
+
+--
+
+```js
+class App extends React.Component {
+    render() {
+        return (
+            <div className="main">
+                <div className="picture-bg">
+                    <img src={getRandomBg()} />
+                </div>
+                <Clock />
+                <CmdLine ps1="λ" />
+                <LinksBox />
+            </div>
+        );
+    }
+}
+```
+--
+
+```js
+class Hello extends React.Component {
+    render() {
+        let items = this.props.items;
+        return (
+            <div>      
+                <h3>{this.props.title}</h3>
+                <ul>
+                    {items.map((item, i) => {
+                       return <li key={i}>{item.title}</li>                   
+                    })}
+                </ul>
+            </div>      
+        );
+    }
+}
 ```
 
 --
 
-hello.react.jsx
-```js
-class Hello extends React.Component {
-    render() {
-        return (
-            <div>      
-                <h3>{this.propts.date}</h3>
-                <ul>
-                    {items.map((item, i) => {
-                       return <li onClick={this._clickHandler.bind(this, item)} 
-                                key={i}>{item.title}</li>                   
-                    })}
-                </ul>
-            </div>      
-        )
-    }
+### Let's talk about Props
+[fragment]
+These things: `<Clock ` <span class="text--emphasize text--mono">format="HH:mm"</span> ` />`
+[/fragment]
 
-    _clickHandler(item) {
-        alert(item.title);
+--
+
+```js
+class Clock extends React.Component {
+    render() {
+        let time = moment().format(this.props.format);
+        return (<time>{time}</time>);
     }
 }
-Hello.propTypes = {
-    items: React.PropTypes.array,
-    date: React.PropTypes.instanceof(Date)
+```
+
+```js
+// ...
+    render() {
+        return (<div><Clock format="HH:mm" /></div>);
+    }
+// ...
+```
+
+--
+
+### PropTypes
+
+```js
+class Clock extends React.Component {
+    render() {
+        let time = moment().format(this.props.format);
+        return (<time>{time}</time>);
+    }
+}
+Clock.propTypes = {
+    format: React.PropTypes.string
 };
 ```
+
 --
 
 PropTypes
@@ -157,156 +234,193 @@ customProp: function(props, propName, componentName) {
   if (!/matchme/.test(props[propName])) {...}
 }
 ```
+[PropType Docs](https://facebook.github.io/react/docs/reusable-components.html#prop-validation)
 
 --
 
-### Why?
-
-- Components over separation of concerns
-- tying 'templates' and 'display logic' together
-
-#### ⟹  simpler, more expressive Code
+hello.angular.js
+```js
+angular.module('Hello')
+    .directive('hello', function() {
+        return {
+            scope: {
+                date: '=',
+                items: '='
+            },
+            templateUrl: 'my-template.tpl.html',
+            controller: function($scope) {
+                $scope._clickHandler = function(item) {
+                    alert(item.title);
+                }
+            }
+        }  
+    });
+```
+my-template.tpl.html
+```html
+<h3>{{date}}</h3>
+<ul>
+    <li ng-repeat="item in items" ng-click="_clickHandler(item)">
+        {{item.title}}
+    </li>
+</ul>
+```
 
 --
 
-## Immutability
+hello.react.jsx
+```js
+class Hello extends React.Component {
+    render() {
+        return (
+            <div>      
+                <h3>{this.props.date}</h3>
+                <ul>
+                    {items.map((item, i) => {
+                       return <li onClick={this._clickHandler.bind(this, item)} 
+                                key={i}>{item.title}</li>                   
+                    })}
+                </ul>
+            </div>      
+        )
+    }
+
+    _clickHandler(item) {
+        alert(item.title);
+    }
+}
+Hello.propTypes = {
+    items: React.PropTypes.array,
+    date: React.PropTypes.instanceOf(Date)
+};
+Hello.defaultProps = {
+    date: new Date().toString(),
+    items: []
+};
+```
 
 --
 
-- entire DOM is rerendered
-- no "bindings"
+```js
+class InputTest extends React.Component {
+    render() {
+        return (<input type="text" value="Hello" />);
+    }
+}
+```
 
 [fragment]
-... kinda
+![img/controlled-input-no-event.gif](img/controlled-input-no-event.gif)
+[/fragment]
+
+[small][Source](https://github.com/RobinThrift/react-pres-code/tree/INPUT_EXAMPLE_1)[/small]
+
+--
+
+### Immutability
+
+--
+
+### Immutability
+
+- no bindings
+- no DOM events
+- when the Compontents change:   
+rerender entire DOM
+
+--
+
+### Virtual DOM
+[fragment]
+It's just like the real DOM
+[/fragment]
+
+[fragment]
+But fast!
+[/fragment]
+
+-- 
+
+- mimics the real DOM
+
+[fragment]
+- renders only the difference
+
+`diff: (Tree, Tree) → ∆Tree`
+[/fragment]
+
+[fragment]
+Tree Diffing is usually ∈ O(n<sup>3</sup>)!
+[/fragment]
+
+[fragment]
+By using heurstics, Reacts Diffing Algorithm ∈ O(n)  
+[small][More](https://facebook.github.io/react/docs/reconciliation.html)[/small]
+[/fragment]
+
+
+--
+
+### State
+
+-- {
+    transition: fade
+}
+
+```js
+class InputTest extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {val: 'Hello'};
+    }
+
+    render() {
+        return (<input type="text" value={this.state.val} />);
+    }
+}
+```
+[fragment]
+![img/controlled-input-no-event.gif](img/controlled-input-no-event.gif)
+[/fragment]
+
+-- {
+    transition: fade
+}
+
+```js
+class InputTest extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {val: 'Hello'};
+    }
+
+    render() {
+        return (<input type="text" value={this.state.val}
+            onChange={this._handleChange.bind(this)} />);
+    }
+
+    _handleChange(event) {
+        this.setState({val: event.target.value});
+    }
+}
+```
+
+[fragment]
+![img/controlled-input-event.gif](img/controlled-input-event.gif)
+[small][Source](https://github.com/RobinThrift/react-pres-code/tree/INPUT_EXAMPLE_2)[/small]
 [/fragment]
 
 --
 
-## Virtual Dom Diffing
+### Lifecycle Methods
 
--- {
-    transition: fade
-}
-
-![](img/dom_simple.png)
-
--- {
-    transition: fade
-}
-
-![](img/dom_marked.png)
-
-
--- {
-    transition: fade
-}
-
-![](img/dom_removed.png)
-
---
-
-![](img/dom_diff.png)
-
---
-
-![](img/dom_marked.png)
-
---
-
-### Benefits
-
-- Simpler Architecture
-- Browserless Rendering
-- Predictable => Testable
-
---
-
-## Flux
-
--- {
-    background:
-        img: img/flux.png
-        size: 80% auto
-}
-
---
-
-```js
-DateDisplay = React.createClass({
-    propTypes: {                         
-        date: React.PropTypes.object,    
-        compareTo: React.PropTypes.object
-    },                                   
-    getDefaultProps: function() {        
-        return {                         
-            compareTo: moment()           
-        };           
-    },
-    render: function() {
-        return (
-           <span className="date">{this.props.date.from(this.props.compareTo)}</span> 
-        );
-    };
-
-});
-```
-
---
-
-```js
-DateInput = React.createClass({
-    getInitialState: function() {        
-        return {                         
-            date: moment().format('DD.MM.YY')
-        };           
-    },
-    render: function() {
-        return (
-            <input name="dateInput" id="dateInput" 
-                value={this.state.date} 
-                onChange={this._changeHandler} />
-        );
-    },
-
-    _changeHandler: function(e) {
-        this.setState({
-            date: e.target.value
-        });
-        if (typeof this.props.onChange === 'function') {
-            this.props.onChange(e.target.value);
-        }
-    }
-});
-```
-
---
-
-```js
-App = React.createClass({
-    getInitialState: function() {
-        return {
-            date: moment()
-        };
-    },
-    render: function() {
-        return (
-            <div className='app-wrapper'>
-                <DateInput onChange={this._onChange} />
-                <DateDisplay date={this.state.date} />
-            </div>
-        );
-    },
-    _onChange: function(val) {
-        var d = moment(val, 'DD.MM.YY');
-        if (d.isValid()) {
-            this.setState({
-                date: d
-            });
-        }
-    }
-});
-```
-
---
-
-<iframe src="http://localhost:8000" style="width:800px;height:400px"></iframe>
+- Mounting
+    - `componentWillMount`
+    - `componentDidMount`
+- Updating
+    - `componentWillReceiveProps(nextProps)`
+    - `shouldComponentUpdate(nextProps, nextState)`
+    - `componentWillUpdate(nextProps, nextState)`
+    - `componentDidUpdate(prevProps, prevState)`
+- Unmounting
+    - `componentWillUnmount`

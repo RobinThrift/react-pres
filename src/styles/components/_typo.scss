@@ -16,17 +16,20 @@
 
 body {
     font-family: $main-font;
-    font-weight: 300;
 }
 
 .reveal {
     font-family: $main-font;
-    font-weight: 300;   
 }
 
 .reveal h1 {
     word-wrap: normal; 
     color: $main;
+}
+
+.reveal h3 {
+    line-height: 1.1em;
+    text-transform: none;
 }
 
 
@@ -67,6 +70,7 @@ body {
 .reveal pre {
     padding: 8px 16px;
     background: #fbfbfb;
+    box-shadow: none;
 }
 
 .reveal pre code {
@@ -128,3 +132,27 @@ body {
     }
 }
 
+
+// first slide
+.reveal .slide:first-child {
+    h1, h2, h3, h4, h5, a {
+        color: $light-font;
+    }
+}
+
+// TEXT STYLES
+.text--accented {
+    font-family: $accent-font !important;
+}
+
+.text--emphasize {
+    color: $main !important;
+}
+
+.text--mono {
+    font-family: $code-font !important;
+}
+
+.text--small {
+    font-size: 40%;
+}

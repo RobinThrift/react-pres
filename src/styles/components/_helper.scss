@@ -5,4 +5,14 @@
     float: left;
     width: 48%;
     margin: 0 1%;
+
+    pre {
+        width: auto;
+        display: inline-block;
+    }
+
+    p+pre {
+        margin-top: -1em;
+    }
 }
+

@@ -55,6 +55,9 @@ Metalsmith(__dirname)
             'accented': function(str) {
                 return '<span class="text--accented">' + str + '</span>';
             },
+            'emphasize': function(str) {
+                return '<span class="text--emphasize">' + str + '</span>';
+            },
             'small': function(str) {
                 return '<small class="text--small">' + str + '</small>';
             },

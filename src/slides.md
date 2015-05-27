@@ -78,6 +78,20 @@ reveal:
 
 --
 
+"Reduce [emphasize]Coupling[/emphasize], increase [emphasize]Cohesion[/emphasize]"
+
+--
+"[emphasize]Coupling[/emphasize] is the manner and degree of interdependence between software modules."
+
+[small][http://en.wikipedia.org/wiki/Coupling_%28computer_programming%29](http://en.wikipedia.org/wiki/Coupling_%28computer_programming%29)[/small]
+
+--
+"[emphasize]Cohesion[/emphasize] refers to the degree to which the elements of a module belong together."
+
+[small][http://en.wikipedia.org/wiki/Cohesion_(computer_science)](http://en.wikipedia.org/wiki/Cohesion_%28computer_science%29)[/small]
+--
+
+
 ```js
 class Hello extends React.Compontent {
     render() {
@@ -424,3 +438,37 @@ class InputTest extends React.Component {
     - `componentDidUpdate(prevProps, prevState)`
 - Unmounting
     - `componentWillUnmount`
+
+--
+
+### Unidirectional Data-Flow
+#### Single Source Of Truth
+
+[half]
+![img/unidirectional-data-flow.png](img/unidirectional-data-flow.png)
+[/half]
+
+[half]
+
+Mutable:
+```js
+this.setState(...)
+```
+
+Immutable:
+```js
+this.props
+```
+[/half]
+
+-- 
+
+### Conclusions & More Benefits
+- Simpler Architecture
+    - tying 'templates' and 'display logic' together
+- Virtual DOM allows server side rendering
+- Synthetic Event System & Virtual DOM allow  
+easier testing
+- can easily be integrated with existing frameworks
+
+⟹  simpler, safer, and more expressive code

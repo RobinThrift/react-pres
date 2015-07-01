@@ -464,11 +464,41 @@ this.props
 -- 
 
 ### Conclusions & More Benefits
-- Simpler Architecture
+- simpler architecture
     - tying 'templates' and 'display logic' together
-- Virtual DOM allows server side rendering
-- Synthetic Event System & Virtual DOM allow  
-easier testing
+- server side rendering
+- synthetic event system & virtual DOM make   
+testing easier
 - can easily be integrated with existing frameworks
 
 ⟹  simpler, safer, and more expressive code
+
+-- {
+    background: 
+        img: '#cb5243'
+}
+
+# React Native
+
+--
+
+"Write Once, Run Anywhere"
+[fragment]Success Rate:[/fragment]
+[fragment]0%[/fragment]
+
+--
+
+"Learn Once, Write Anywhere"
+
+--
+
+![img/native-flow.png](img/native-flow.png)
+
+--
+
+### Benefits
+
+- declarative UIs
+- (non UI) code can be shared between different platforms
+- faster iteration (live reloading)
+- CSS-Like styling with flexbox
